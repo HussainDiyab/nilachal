@@ -17,28 +17,23 @@ import { prefersReducedMotion } from "@/lib/motion";
 const SERVICES = [
   {
     n: "01",
-    t: "Real Estate Development",
-    d: "End-to-end residential and commercial projects, conceived and built from the ground up.",
+    t: "Real Estate",
+    d: "End-to-end residential and commercial development — acquiring, building and trading land and property with professional diligence.",
   },
   {
     n: "02",
-    t: "Land Acquisition & Sales",
-    d: "Buying and selling residential, commercial and agricultural land with full professional diligence.",
+    t: "Trading",
+    d: "Sourcing and trading in building materials, commodities and general goods — dependable supply and fair, transparent dealing.",
   },
   {
     n: "03",
-    t: "Residential Construction",
-    d: "Homes and housing delivered with quality, transparency and lasting value.",
+    t: "Hospitality",
+    d: "Hotels, resorts and guest experiences designed for comfort, warmth and lasting impressions.",
   },
   {
     n: "04",
-    t: "Commercial Construction",
-    d: "Offices, retail and institutional builds executed to exacting standards.",
-  },
-  {
-    n: "05",
-    t: "Agricultural Land",
-    d: "Developing and trading agricultural holdings as long-term investments in growth.",
+    t: "Agriculture",
+    d: "Developing and cultivating agricultural holdings — turning fertile land into long-term, growing value.",
   },
 ];
 

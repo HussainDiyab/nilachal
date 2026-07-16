@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Single-page site. REPLACE the domain below with your real domain once it's
+  live (must match SITE_URL in src/routes/__root.tsx), then update the
+  Sitemap line in robots.txt to point here.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN.com/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

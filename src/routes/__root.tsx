@@ -13,6 +13,50 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CustomCursor } from "../components/CustomCursor";
 
+/*
+ * Absolute site URL — used for the Open Graph / Twitter share image, the
+ * canonical link, and the JSON-LD structured data below.
+ *
+ * ⚠️ REPLACE this with your real domain once it's live, e.g.
+ *      "https://nilachalallied.com"
+ * ...and update the same URL in public/sitemap.xml. Social platforms
+ * (WhatsApp, LinkedIn, X) need an ABSOLUTE https URL to resolve the share
+ * image, so previews won't render correctly until this is a real domain.
+ */
+const SITE_URL = "https://REPLACE-WITH-YOUR-DOMAIN.com";
+const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+
+// LocalBusiness / RealEstateAgent structured data — helps Google show a rich
+// result with the company's contact details, location and credentials.
+const STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  name: "Nilachal Allied Projects Limited",
+  description:
+    "Private limited company working across real estate, trading, hospitality and agriculture in Silchar, Assam and the Northeast.",
+  url: SITE_URL,
+  logo: `${SITE_URL}/favicon.png`,
+  image: OG_IMAGE,
+  email: "nilachal.alliedprojects@gmail.com",
+  telephone: "+918011890058",
+  foundingDate: "2025-07-23",
+  identifier: {
+    "@type": "PropertyValue",
+    propertyID: "CIN",
+    value: "U42900AS2025PTC028575",
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Kanakpur Part II",
+    addressLocality: "Silchar",
+    addressRegion: "Assam",
+    postalCode: "788005",
+    addressCountry: "IN",
+  },
+  areaServed: ["Silchar", "Assam", "Northeast India"],
+  knowsAbout: ["Real Estate", "Trading", "Hospitality", "Agriculture"],
+};
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -82,7 +126,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Nilachal Allied Projects Limited is a private limited company delivering real estate, construction and agricultural projects across Silchar, Assam and the Northeast — with integrity and lasting value.",
+          "Nilachal Allied Projects Limited is a private limited company working across real estate, trading, hospitality and agriculture in Silchar, Assam and the Northeast — with integrity and lasting value.",
       },
       { name: "author", content: "Nilachal Allied Projects Limited" },
       { name: "theme-color", content: "#1c2a52" },
@@ -90,23 +134,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Real estate, construction and agriculture — building and trading land, homes and futures across Assam and the Northeast.",
+          "Real estate, trading, hospitality and agriculture — building and trading across Silchar, Assam and the Northeast.",
       },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Nilachal Allied Projects Limited" },
       { property: "og:locale", content: "en_IN" },
-      // Interim share image (the emblem). Replace /og-image.jpg with a branded
-      // 1200x630 image and switch these to the absolute deploy URL for best
-      // results on WhatsApp / LinkedIn / X.
-      { property: "og:image", content: "/favicon.png" },
+      { property: "og:url", content: SITE_URL },
+      // Branded 1200x630 share image. Uses the absolute SITE_URL above so
+      // WhatsApp / LinkedIn / X can resolve it once the real domain is set.
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:type", content: "image/jpeg" },
       { property: "og:image:alt", content: "Nilachal Allied Projects Limited" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "/favicon.png" },
+      { name: "twitter:image", content: OG_IMAGE },
       { name: "twitter:title", content: "Nilachal Allied Projects Limited" },
       {
         name: "twitter:description",
         content:
-          "Real estate, construction and agriculture across Silchar, Assam and the Northeast.",
+          "Real estate, trading, hospitality and agriculture across Silchar, Assam and the Northeast.",
       },
     ],
     links: [
@@ -114,6 +161,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "canonical", href: SITE_URL },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "apple-touch-icon", href: "/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -135,6 +183,10 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
+        />
       </head>
       <body>
         {children}

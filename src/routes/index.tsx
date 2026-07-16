@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { FluidText, type FluidLine } from "@/components/FluidText";
+import { EnquiryForm } from "@/components/EnquiryForm";
+import { TrustStrip } from "@/components/TrustStrip";
 import { WhatWeDo } from "@/components/WhatWeDo";
 import { HeroBackground } from "@/components/HeroBackground";
 import { ScrollSyncedText } from "@/components/ScrollSyncedText";
@@ -18,13 +20,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Nilachal Allied Projects Limited delivers trusted real estate, construction and land solutions across Silchar, Assam and the Northeast with quality and integrity.",
+          "Nilachal Allied Projects Limited — a private limited company working across real estate, trading, hospitality and agriculture in Silchar, Assam and the Northeast, with quality and integrity.",
       },
       { property: "og:title", content: "Nilachal Allied Projects Limited" },
       {
         property: "og:description",
         content:
-          "Building infrastructure and cultivating growth — construction, agriculture and allied projects.",
+          "Real estate, trading, hospitality and agriculture — from the soil to the skyline, across Silchar, Assam and the Northeast.",
       },
     ],
   }),
@@ -34,6 +36,10 @@ export const Route = createFileRoute("/")({
 const EMAIL = "nilachal.alliedprojects@gmail.com";
 const PHONE_DISPLAY = "+91 80118 90058";
 const PHONE_TEL = "+918011890058";
+// WhatsApp deep link with a prefilled enquiry message (opens WhatsApp, unlike tel:).
+const WHATSAPP_NUMBER = "918011890058";
+const WHATSAPP_TEXT = "Hi Nilachal, I'd like to enquire about";
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_TEXT)}`;
 
 const HERO_LINES: FluidLine[] = [
   { text: "NILACHAL", scale: 1 }, // Archivo Black — heaviest
@@ -51,6 +57,7 @@ function Index() {
         <WhyUs />
         <Contact />
       </main>
+      <TrustStrip />
       <Footer />
     </div>
   );
@@ -239,17 +246,17 @@ function About() {
             </h2>
             <div className="mt-12 grid sm:grid-cols-2 gap-10 lg:gap-16 max-w-4xl">
               <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
-                Nilachal Allied Projects Limited is a private limited company operating across real
-                estate and construction. We develop, build and deliver both commercial and
-                residential projects — from the ground up — with a commitment to quality,
-                transparency and lasting value.
+                Nilachal Allied Projects Limited is a private limited company working across real
+                estate, trading, hospitality and agriculture. We develop, build and deliver both
+                commercial and residential projects — from the ground up — with a commitment to
+                quality, transparency and lasting value.
               </p>
               <p className="text-base sm:text-lg leading-relaxed text-muted-foreground">
                 At the core of our practice is land. We acquire, develop and trade property — buying
                 and selling residential, commercial and agricultural land — while guiding clients
-                through every stage with professional diligence. Whether raising buildings or
-                cultivating opportunity in agricultural holdings, we treat each parcel as a
-                long-term investment in growth.
+                through every stage with professional diligence. Beyond the ground itself, our
+                trading and hospitality ventures carry the same diligence into everything we take
+                on.
               </p>
             </div>
           </div>
@@ -291,29 +298,44 @@ function Contact() {
           <br />
           to build.
         </h2>
-        <div className="mt-16 grid sm:grid-cols-12 gap-10 max-w-5xl">
-          <a
-            href={`mailto:${EMAIL}`}
-            className="group block border-t border-primary pt-4 sm:col-span-8"
-          >
-            <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-              Write
-            </div>
-            <div className="mt-3 text-xl sm:text-2xl lg:text-3xl text-primary whitespace-nowrap group-hover:font-serif-italic transition-all">
-              {EMAIL}
-            </div>
-          </a>
-          <a
-            href={`tel:${PHONE_TEL}`}
-            className="group block border-t border-primary pt-4 sm:col-span-4 sm:col-start-9"
-          >
-            <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
-              Call / WhatsApp
-            </div>
-            <div className="mt-3 text-xl sm:text-2xl lg:text-3xl text-primary whitespace-nowrap group-hover:font-serif-italic transition-all">
-              {PHONE_DISPLAY}
-            </div>
-          </a>
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          {/* Enquiry form */}
+          <div className="lg:col-span-7">
+            <EnquiryForm whatsappUrl={WHATSAPP_URL} />
+          </div>
+
+          {/* Direct contact details */}
+          <div className="lg:col-span-4 lg:col-start-9 flex flex-col gap-8">
+            <a href={`mailto:${EMAIL}`} className="group block border-t border-primary pt-4">
+              <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                Write
+              </div>
+              <div className="mt-3 text-lg sm:text-xl text-primary break-all group-hover:font-serif-italic transition-all">
+                {EMAIL}
+              </div>
+            </a>
+            <a href={`tel:${PHONE_TEL}`} className="group block border-t border-primary pt-4">
+              <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                Call
+              </div>
+              <div className="mt-3 text-lg sm:text-xl text-primary whitespace-nowrap group-hover:font-serif-italic transition-all">
+                {PHONE_DISPLAY}
+              </div>
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block border-t border-primary pt-4"
+            >
+              <div className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                WhatsApp
+              </div>
+              <div className="mt-3 text-lg sm:text-xl text-primary whitespace-nowrap group-hover:font-serif-italic transition-all">
+                {PHONE_DISPLAY}
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -345,12 +367,20 @@ function Footer() {
               <a href={`tel:${PHONE_TEL}`} className="hover:text-white transition-colors">
                 {PHONE_DISPLAY}
               </a>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
         <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[11px] uppercase tracking-[0.22em] text-white/40">
           <div>© {new Date().getFullYear()} Nilachal Allied Projects Limited</div>
-          <div>Construction · Real Estate · Agriculture</div>
+          <div>Real Estate · Trading · Hospitality · Agriculture</div>
         </div>
       </div>
     </footer>

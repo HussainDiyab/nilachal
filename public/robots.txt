@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 
-# Add your sitemap once the domain is live, e.g.:
-# Sitemap: https://your-domain.com/sitemap.xml
+# Sitemap — replace the domain with your real one once it's live
+# (must match SITE_URL in src/routes/__root.tsx and public/sitemap.xml).
+Sitemap: https://REPLACE-WITH-YOUR-DOMAIN.com/sitemap.xml
